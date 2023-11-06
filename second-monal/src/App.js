@@ -1,11 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-
+import Navbar from './components/navbar';
 function App() {
   return (
     <div className="App">
-      <h1>Second Monal Hotel</h1>
-      <button className='btn btn-primary'>Bootstrap button</button>
+      <Navbar/>
     </div>
   );
 }
