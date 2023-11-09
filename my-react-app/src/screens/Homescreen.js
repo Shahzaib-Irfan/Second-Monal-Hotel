@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Room from '../components/Room';
+
 
 function Homescreen() {
     const [rooms, setRooms] = useState([]); // Initialize rooms as an empty array
@@ -25,18 +27,22 @@ function Homescreen() {
     }, []); 
 
     return (
-        <div>
-            {loading ? (
-                <h1>Loading....</h1>
-            ) : error ? (
-                <h1>Error</h1>
-            ) : rooms.length === 0 ? (
-                <h1>No rooms available</h1>
-            ) : (
-                rooms.map((room, index) => {
-                    return <h1 key={index}>{room.name}</h1>;
-                })
-            )}
+        <div className='container'>
+            <div className='row justify-content-center mt-5'>
+                {loading ? (
+                    <h1>Loading....</h1>
+                ) : error ? (
+                    <h1>Error</h1>
+                ) : rooms.length === 0 ? (
+                    <h1>No rooms available</h1>
+                ) : (
+                    rooms.map((room, index) => {
+                        return <div key={index} className='col-md-9 mt-3'>
+                            <Room room={room} index={index}/>
+                        </div>
+                    })
+                )}
+            </div>
         </div>
     );
 }
