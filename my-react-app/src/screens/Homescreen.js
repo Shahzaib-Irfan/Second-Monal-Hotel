@@ -15,7 +15,6 @@ function Homescreen() {
                 const data = (await axios.get("http://localhost:5000/api/rooms/getAllrooms")).data;
                 const roomsArray = data.rooms;
                 setRooms(roomsArray);
-                console.log(roomsArray);
                 setLoading(false); // Set loading to false after fetching data
             } catch (error) {
                 setError(true); // Set error to true if there's an error
