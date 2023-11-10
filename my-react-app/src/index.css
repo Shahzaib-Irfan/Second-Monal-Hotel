@@ -31,3 +31,9 @@ code {
   border-radius: 5px;
   padding: 20px;
 }
+
+input {
+  box-shadow: none !important;
+  margin-top: 10px;
+  border: 1px solid black !important;
+}
