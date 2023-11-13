@@ -16,10 +16,14 @@ const cors = require('cors'); // Import the cors package
 const app = express();
 require('./db');
 const roomRoute = require('./routes/roomsRoute');
+const userRoute = require('./routes/UserRoute');
 
+
+app.use(express.json());
 app.use(cors()); // Enable CORS for all routes
 
 app.use('/api/rooms', roomRoute);
+app.use('/api/users', userRoute);
 
 const port = process.env.PORT || 5000;
 

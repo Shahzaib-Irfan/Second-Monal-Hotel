@@ -1,6 +1,6 @@
 import e from 'cors'
 import React , {useState , useEffect} from 'react'
-
+import axios from 'axios'
 
 function Registerscreen() {
     const [name , setname] = useState('')
@@ -8,14 +8,19 @@ function Registerscreen() {
     const [password , setpassword] = useState('')
     const [confirmPassword , setconfirmpassword] = useState('')
 
-    function Register() {
+    async function Register() {
 
         if(password == confirmPassword)
         {
             const user = {
                 name,email,password,confirmPassword
             }
-            console.log(user);
+            try {
+                const result = (await axios.post('http://localhost:5000/api/users/register' , user)).data;
+
+            } catch (error) {
+                console.log(error);
+            }
         }
         else
         {
