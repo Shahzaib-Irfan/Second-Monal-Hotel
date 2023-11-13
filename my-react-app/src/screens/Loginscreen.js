@@ -1,16 +1,21 @@
 import e from 'cors'
 import React , {useState , useEffect} from 'react'
+import axios from 'axios'
 
-
-function Loginscreen() {
+ function Loginscreen() {
     const [email , setemail] = useState('')
     const [password , setpassword] = useState('')
 
-    function Login() {
+    async function Login() {
             const user = {
                 email,password
             }
-            console.log(user);
+            try {
+              const result = (await axios.post('http://localhost:5000/api/users/login' , user)).data;
+
+          } catch (error) {
+              console.log(error);
+          }
     }
 
   return (
