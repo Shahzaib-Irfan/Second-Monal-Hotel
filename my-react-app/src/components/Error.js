@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Error() {
+function Error({message}) {
   return (
     <div class="alert alert-danger" role="alert">
-        There is an Error Check it out!
+        {message}
     </div>
   )
 }
