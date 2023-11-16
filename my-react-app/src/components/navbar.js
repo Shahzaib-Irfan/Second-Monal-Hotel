@@ -3,6 +3,11 @@ import React from 'react';
 function Navbar() {
   // Retrieve user information from localStorage
   const User = JSON.parse(localStorage.getItem('currentUser'));
+  function LogOut()
+  {
+    localStorage.removeItem("currentUser");
+    window.location.href = "/login";
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'black' }}>
       <div className="container-fluid">
@@ -18,12 +23,20 @@ function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon" ><i class="fa-solid fa-bars"></i></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
               {User && User.user && User.user.name ? (
-                  <h1 style={{ color: 'white' }}>{User.user.name}</h1>
+                    <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style={{ backgroundColor: 'black' }}>
+                    <i class="fa-solid fa-user">{User.user.name}</i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="#">Bookings</a></li>
+                      <li><a class="dropdown-item" href="#" onClick={LogOut}>Log Out</a></li>
+                    </ul>
+                  </div>
                 ) : (
                   <>
                     <li className="nav-item">

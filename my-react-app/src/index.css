@@ -37,3 +37,8 @@ input {
   margin-top: 10px;
   border: 1px solid black !important;
 }
+
+.dropdown-toggle
+{
+  border: 0px solid black !important;
+}
