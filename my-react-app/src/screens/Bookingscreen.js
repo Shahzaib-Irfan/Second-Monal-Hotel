@@ -3,12 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
+import moment from 'moment';
 
 function Bookingscreen() {
   let { roomid } = useParams();
+  let { fromdate } = useParams();
+  let { todate } = useParams();
   const [room, setRoom] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const fromdate1 = moment(fromdate, 'DD-MM-YYYY');
+  const todate1 = moment(todate, 'DD-MM-YYYY');
+  const totalDays = moment.duration(todate1.diff(fromdate1)).asDays();
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,8 +62,8 @@ function Bookingscreen() {
                         <hr />
                         <b>
                             <p>Name :</p>
-                            <p>From Date :</p>
-                            <p>To Date :</p>
+                            <p>From Date : {fromdate}</p>
+                            <p>To Date :{todate}</p>
                             <p>Max Count : {room.maxCount}</p>
                         </b>
                     </div>
@@ -64,7 +71,7 @@ function Bookingscreen() {
                         <h2>Amount</h2>
                         <hr />
                         <b>
-                            <p>Total days</p>
+                            <p>Total days : {totalDays}</p>
                             <p>Rent Per day : {room.rentperday}</p>
                             <p>Total Amount</p>
                         </b>

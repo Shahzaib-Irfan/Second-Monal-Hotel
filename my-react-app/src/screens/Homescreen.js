@@ -3,13 +3,16 @@ import axios from 'axios';
 import Room from '../components/Room';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
-
+import {moment} from 'moment'
+import { DatePicker, Space } from 'antd';
+const { RangePicker } = DatePicker;
 
 function Homescreen() {
     const [rooms, setRooms] = useState([]); // Initialize rooms as an empty array
     const [loading, setLoading] = useState(false); // Initialize with false
     const [error, setError] = useState(false); // Initialize with false
-
+    const [fromdate , setfromDate] = useState();
+    const [todate , settoDate] = useState();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -27,8 +30,22 @@ function Homescreen() {
         fetchData();
     }, []); 
 
+    function FilterByDate(dates, dateStrings) {
+        setfromDate(dates[0].format('DD-MM-YYYY'));
+        settoDate(dates[1].format('DD-MM-YYYY'));
+    }
+    
+    
+
     return (
         <div className='container'>
+
+            <div className='row mt-5'>
+                <div className='col-md-3'>
+                    <RangePicker format="DD-MM-YYYY" onChange={(dates, dateStrings) => FilterByDate(dates, dateStrings)} />     
+                </div>
+            </div>
+
             <div className='row justify-content-center mt-5'>
                 {loading ? (
                     <Loader/>
@@ -39,7 +56,7 @@ function Homescreen() {
                 ) : (
                     rooms.map((room, index) => {
                         return <div key={index} className='col-md-9 mt-3'>
-                            <Room room={room} index={index}/>
+                            <Room room={room} index={index} fromdate={fromdate} todate = {todate}/>
                         </div>
                     })
                 )}
