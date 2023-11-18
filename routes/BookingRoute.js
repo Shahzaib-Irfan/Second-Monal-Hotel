@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Booking = require('../models/booking');
-
+const room_array = require('../models/rooms');
 router.post('/bookroom', async (req, res) => {
     const {
         room,
@@ -19,13 +19,15 @@ router.post('/bookroom', async (req, res) => {
             userid,
             fromdate,
             todate,
-            totalRent,
+            totalAmount : totalRent,
             totalDays,
             transactionId: '1234'
         });
 
         const booking = await newBooking.save();
-
+        const roomTemp = await room_array.findOne({_id : room._id});
+        roomTemp.currentBookings.push({bookingId : booking._id , fromdate : fromdate , todate : todate , userId : userid , status : booking.status});
+        await roomTemp.save();
         res.status(200).json({ message: 'Booking successful', booking });
     } catch (error) {
         console.error(error);

@@ -16,7 +16,8 @@ function Bookingscreen() {
   const todate1 = moment(todate, 'DD-MM-YYYY');
   const totalDays = moment.duration(todate1.diff(fromdate1)).asDays();
   const [totalRent , setTotalRent ] = useState();
-
+  const Name = localStorage.getItem("currentUser");
+  const finalName = JSON.parse(Name);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -90,7 +91,7 @@ function Bookingscreen() {
                         <h2>Booking Details</h2>
                         <hr />
                         <b>
-                            <p>Name :</p>
+                            <p>Name : {finalName.user.name}</p>
                             <p>From Date : {fromdate}</p>
                             <p>To Date :{todate}</p>
                             <p>Max Count : {room.maxCount}</p>
