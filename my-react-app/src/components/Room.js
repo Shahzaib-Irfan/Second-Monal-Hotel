@@ -18,9 +18,12 @@ function Room({room , index , fromdate , todate}) {
                 <p>Type : {room.type}</p>
             </b>
             <div style={{ float: 'right' }} className='btn'>
+            {fromdate && todate && (
                 <Link to={`/book/${room._id}/${fromdate}/${todate}`}>
-                    <button className='btn btn-primary m-2' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}}>Book Now</button>
+                    <button className='btn btn-primary m-2' style={{ backgroundColor: 'black', color: 'white', boxShadow: 'none' }}>Book Now</button>
                 </Link>
+            )}
+                
                 <button className='btn btn-primary' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}} onClick={handleShow}>View Details</button>
             </div>
         </div>

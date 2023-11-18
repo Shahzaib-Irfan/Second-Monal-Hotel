@@ -13,6 +13,7 @@ function Homescreen() {
     const [error, setError] = useState(false); // Initialize with false
     const [fromdate , setfromDate] = useState();
     const [todate , settoDate] = useState();
+    const [duplicaterooms , setduplicaterooms] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -20,6 +21,7 @@ function Homescreen() {
                 const data = (await axios.get("http://localhost:5000/api/rooms/getAllrooms")).data;
                 const roomsArray = data.rooms;
                 setRooms(roomsArray);
+                setduplicaterooms(roomsArray);
                 setLoading(false); // Set loading to false after fetching data
             } catch (error) {
                 setError(true); // Set error to true if there's an error
@@ -33,6 +35,34 @@ function Homescreen() {
     function FilterByDate(dates, dateStrings) {
         setfromDate(dates[0].format('DD-MM-YYYY'));
         settoDate(dates[1].format('DD-MM-YYYY'));
+        var temprooms = [];
+        var availability = false;
+        for (const room of duplicaterooms) {
+            if (room.ccurrentBookings && room.ccurrentBookings.length > 0) {
+                let availability = false;
+        
+                for (const booking of room.ccurrentBookings) {
+                    if (
+                        !moment(dates[0].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate, null, '[]') &&
+                        !moment(dates[1].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate, null, '[]')
+                    ) {
+                        if (
+                            moment(dates[0].format('DD-MM-YYYY')) !== booking.fromdate &&
+                            moment(dates[0].format('DD-MM-YYYY')) !== booking.todate &&
+                            moment(dates[1].format('DD-MM-YYYY')) !== booking.fromdate &&
+                            moment(dates[1].format('DD-MM-YYYY')) !== booking.todate
+                        ) {
+                            availability = true;
+                        }
+                    }
+                }
+            }
+            if (availability || room.ccurrentBookings.length === undefined) {
+                temprooms.push(room);
+            }
+            setRooms(temprooms);
+        }
+        
     }
     
     
