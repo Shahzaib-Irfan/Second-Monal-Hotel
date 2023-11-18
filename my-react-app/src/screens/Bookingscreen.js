@@ -15,7 +15,7 @@ function Bookingscreen() {
   const fromdate1 = moment(fromdate, 'DD-MM-YYYY');
   const todate1 = moment(todate, 'DD-MM-YYYY');
   const totalDays = moment.duration(todate1.diff(fromdate1)).asDays();
-  
+  const [totalRent , setTotalRent ] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +24,7 @@ function Bookingscreen() {
   
         const response = await axios.get(`http://localhost:5000/api/rooms/getroombyid/${roomid}`);
         const data = response.data;
+        setTotalRent(data.rentperday * totalDays);
         setRoom(data);
         setLoading(false);
       } catch (error) {
@@ -36,6 +37,34 @@ function Bookingscreen() {
     fetchData();
   }, []); 
   
+  async function BookRoom() {
+    try {
+        const currentUserString = localStorage.getItem("currentUser");
+        if (!currentUserString) {
+            console.error("User information not found in localStorage");
+            // Handle the absence of user information, e.g., redirect to login page
+            return;
+        }
+        const currentUser = JSON.parse(currentUserString);
+        const BookingDetails = {
+            room,
+            userid: currentUser.user._id,
+            fromdate,
+            todate,
+            totalRent,
+            totalDays
+        };
+
+        const response = await axios.post('http://localhost:5000/api/bookings/bookroom', BookingDetails);
+
+        // Handle the response as needed, e.g., show a success message
+        console.log('Booking successful:', response.data);
+    } catch (error) {
+        console.error('Error booking room:', error);
+        // Handle the error, e.g., show an error message to the user
+    }
+}
+
 
   return (
     <div className='m-5'>
@@ -73,11 +102,11 @@ function Bookingscreen() {
                         <b>
                             <p>Total days : {totalDays}</p>
                             <p>Rent Per day : {room.rentperday}</p>
-                            <p>Total Amount</p>
+                            <p>Total Amount : {totalRent}</p>
                         </b>
                     </div>
                     <div style={{float : 'right'}}>
-                        <button className='btn btn-primary' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}}>Pay Now</button>
+                        <button className='btn btn-primary' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}} onClick={BookRoom}>Pay Now</button>
                     </div>
                 </div>
                 </div>
