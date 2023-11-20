@@ -3,7 +3,7 @@ import axios from 'axios';
 import Room from '../components/Room';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
-import {moment} from 'moment'
+import moment from 'moment'
 import { DatePicker, Space } from 'antd';
 const { RangePicker } = DatePicker;
 
@@ -38,26 +38,27 @@ function Homescreen() {
         var temprooms = [];
         var availability = false;
         for (const room of duplicaterooms) {
-            if (room.ccurrentBookings && room.ccurrentBookings.length > 0) {
-                let availability = false;
-        
-                for (const booking of room.ccurrentBookings) {
+            if (room.currentBookings && room.currentBookings.length > 0) {
+                availability = false;
+                for (const booking of room.currentBookings) {
                     if (
-                        !moment(dates[0].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate, null, '[]') &&
-                        !moment(dates[1].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate, null, '[]')
+                        !moment(dates[0].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate , null , '[]') &&
+                        !moment(dates[1].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate , null ,  '[]')
                     ) {
+                        
                         if (
-                            moment(dates[0].format('DD-MM-YYYY')) !== booking.fromdate &&
-                            moment(dates[0].format('DD-MM-YYYY')) !== booking.todate &&
-                            moment(dates[1].format('DD-MM-YYYY')) !== booking.fromdate &&
-                            moment(dates[1].format('DD-MM-YYYY')) !== booking.todate
+                            moment(dates[0].format('DD-MM-YYYY'))._i !== booking.fromdate &&
+                            moment(dates[0].format('DD-MM-YYYY'))._i !== booking.todate &&
+                            moment(dates[1].format('DD-MM-YYYY'))._i !== booking.fromdate &&
+                            moment(dates[1].format('DD-MM-YYYY'))._i !== booking.todate
                         ) {
                             availability = true;
+                            
                         }
                     }
                 }
             }
-            if (availability || room.ccurrentBookings.length === undefined) {
+            if (availability) {
                 temprooms.push(room);
             }
             setRooms(temprooms);
