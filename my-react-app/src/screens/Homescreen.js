@@ -40,12 +40,20 @@ function Homescreen() {
         for (const room of duplicaterooms) {
             if (room.currentBookings && room.currentBookings.length > 0) {
                 availability = false;
-                for (const booking of room.currentBookings) {
-                    if (
-                        !moment(dates[0].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate , null , '[]') &&
-                        !moment(dates[1].format('DD-MM-YYYY')).isBetween(booking.fromdate, booking.todate , null ,  '[]')
-                    ) {
+                for (const booking of room.currentBookings) {                    
+                        const fromDateString = booking.fromdate;
+                        const fromParts = fromDateString.split('-');
+                        const fromDate = new Date(fromParts[2], fromParts[1] - 1, fromParts[0]);
                         
+                        // Similarly, do the same for toDate
+                        const toDateString = booking.todate;
+                        const toParts = toDateString.split('-');
+                        const toDate = new Date(toParts[2], toParts[1] - 1, toParts[0]);
+                        const date0 = new Date(dates[0].format('MM-DD-YYYY'));
+                        const date1 = new Date(dates[1].format('MM-DD-YYYY'));
+                        
+                    if (!(date0 >= fromDate && date0 <= toDate) && !(date1 >= fromDate && date1 <= toDate)) {
+                        console.log("hamza");
                         if (
                             moment(dates[0].format('DD-MM-YYYY'))._i !== booking.fromdate &&
                             moment(dates[0].format('DD-MM-YYYY'))._i !== booking.todate &&
