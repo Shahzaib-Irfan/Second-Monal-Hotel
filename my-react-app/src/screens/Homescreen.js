@@ -53,7 +53,6 @@ function Homescreen() {
                         const date1 = new Date(dates[1].format('MM-DD-YYYY'));
                         
                     if (!(date0 >= fromDate && date0 <= toDate) && !(date1 >= fromDate && date1 <= toDate)) {
-                        console.log("hamza");
                         if (
                             moment(dates[0].format('DD-MM-YYYY'))._i !== booking.fromdate &&
                             moment(dates[0].format('DD-MM-YYYY'))._i !== booking.todate &&
