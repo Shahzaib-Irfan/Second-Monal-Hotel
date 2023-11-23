@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 import moment from 'moment';
+import StripeCheckout from 'react-stripe-checkout';
 
 function Bookingscreen() {
   let { roomid } = useParams();
@@ -38,7 +39,9 @@ function Bookingscreen() {
     fetchData();
   }, []); 
   
-  async function BookRoom() {
+
+async function onToken(token)
+{
     try {
         const currentUserString = localStorage.getItem("currentUser");
         if (!currentUserString) {
@@ -53,7 +56,8 @@ function Bookingscreen() {
             fromdate,
             todate,
             totalRent,
-            totalDays
+            totalDays,
+            token
         };
 
         const response = await axios.post('http://localhost:5000/api/bookings/bookroom', BookingDetails);
@@ -65,7 +69,6 @@ function Bookingscreen() {
         // Handle the error, e.g., show an error message to the user
     }
 }
-
 
   return (
     <div className='m-5'>
@@ -107,7 +110,15 @@ function Bookingscreen() {
                         </b>
                     </div>
                     <div style={{float : 'right'}}>
-                        <button className='btn btn-primary' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}} onClick={BookRoom}>Pay Now</button>
+                        {/* <button className='btn btn-primary' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}} onClick={BookRoom}>Pay Now</button> */}
+                        <StripeCheckout
+                            amount={totalRent * 100}
+                            token={onToken}
+                            currency='PKR'
+                            stripeKey="pk_test_51NQplaIguDrrT8ujPKnNmYaQ66j9Y3QjSHRTq5mkt0KLoeTO8qPCXFPOrhwiLmTZh6BKdkWwVZm3wsGJ1ci4H3PD00SBIb9JMK"
+                        >
+                            <button className='btn btn-primary' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}} >Pay Now</button>
+                        </StripeCheckout>
                     </div>
                 </div>
                 </div>
