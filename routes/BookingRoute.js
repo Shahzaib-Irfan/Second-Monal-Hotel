@@ -80,4 +80,21 @@ router.post('/bookroom', async (req, res) => {
     }
 });
 
+router.post('/getbookingsbyuserid', async (req, res) => {
+    try {
+      const { userid } = req.body;
+      // Assuming you are using Mongoose for MongoDB operations
+      const booking = await Booking.find({ userid });
+      
+      if (booking) {
+        res.json(booking);
+      } else {
+        res.json({ success: false, message: 'Bookings not found for the given userid' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+
 module.exports = router;
