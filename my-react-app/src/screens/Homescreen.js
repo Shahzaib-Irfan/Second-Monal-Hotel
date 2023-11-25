@@ -13,6 +13,8 @@ function Homescreen() {
     const [error, setError] = useState(false); // Initialize with false
     const [fromdate , setfromDate] = useState();
     const [todate , settoDate] = useState();
+    const [SearchKey , setSearchKey] = useState('');
+    const [type , setType] = useState('All');
     const [duplicaterooms , setduplicaterooms] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
@@ -73,24 +75,50 @@ function Homescreen() {
         
     }
     
-    
+    function FilterBySearch()
+    {
+        const tempRooms = duplicaterooms.filter(room => room.name.toLowerCase().includes(SearchKey.toLowerCase()));
+        setRooms(tempRooms);
+    }
 
+    function FilterByType(e)
+    {
+        setType(e);
+        if(e !== 'All')
+        {
+            const temprooms = duplicaterooms.filter(room => room.name.toLowerCase()==e.toLowerCase());
+            setRooms(temprooms);
+        }
+        else
+        {
+            setRooms(duplicaterooms);
+        }
+    }
     return (
         <div className='container'>
 
-            <div className='row mt-5'>
+            <div className='row mt-5 bs'>
                 <div className='col-md-3'>
                     <RangePicker format="DD-MM-YYYY" onChange={(dates, dateStrings) => FilterByDate(dates, dateStrings)} />     
                 </div>
+                <div className='col-md-5'>
+                    <input type='text' className='form-control' placeholder='Search Rooms' value={SearchKey} onChange={(e)=>{setSearchKey(e.target.value)}} onKeyUp={FilterBySearch}/>
+                </div>
+                <div className='col-md-4'>
+                    <div className='select-wrapper'>
+                        <select className='form-control' value={type} onChange={(e)=>{FilterByType(e.target.value)}}>
+                            <option value="All">All</option>
+                            <option value="Delux">Delux</option>
+                            <option value="Non-Delux">Non-Delux</option>
+                        </select>
+                        <span className='symbol'>&#9660;</span>
+                    </div>
+                </div>
             </div>
-
+            
             <div className='row justify-content-center mt-5'>
                 {loading ? (
                     <Loader/>
-                ) : error ? (
-                    <Error/>
-                ) : rooms.length === 0 ? (
-                    <h1>No rooms available</h1>
                 ) : (
                     rooms.map((room, index) => {
                         return <div key={index} className='col-md-9 mt-3'>
