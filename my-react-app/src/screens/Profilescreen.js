@@ -13,7 +13,7 @@ function Profilescreen() {
     useEffect(()=>{
         if(!u)
         {
-            window.location.href('/Login');
+            window.location.href = '/Login';
         }
     },[])
   return (

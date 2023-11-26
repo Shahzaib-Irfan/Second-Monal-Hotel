@@ -6,6 +6,16 @@ import Error from '../components/Error';
 const { TabPane } = Tabs;
 
 function Adminscreen() {
+    useEffect(()=>{
+        if(!JSON.parse(localStorage.getItem('currentUser')))
+        {
+            window.location.href = '/Login';
+        }
+        if(!JSON.parse(localStorage.getItem('currentUser')).user.status)
+        {
+            window.location.href = '/Login';
+        }
+    },[])
   return (
     <div className='mt-3 ml-3 mr-3 bs'>
         <h3 className='text-center'>Admin Panel</h3>
@@ -20,7 +30,7 @@ function Adminscreen() {
                 <h1>Add Rooms</h1>
             </TabPane>
             <TabPane tab="Users" key="4">
-                <h1>Users</h1>
+                <Users/>
             </TabPane>
         </Tabs>
     </div>
@@ -180,8 +190,21 @@ export function Users()
                             <th>User Id</th>
                             <th>User Name</th>
                             <th>Email</th>
+                            <th>Is Admin</th>
                         </tr>
                      </thead>
+                     <tbody>
+                        {users && (users.map(user=>{
+                            return(
+                                <tr>
+                                    <td>{user._id}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.IsAdmin ? 'yes' : 'No'}</td>
+                                </tr>
+                            );
+                        }))}
+                     </tbody>
                 </table>
             </div>
         </div>
