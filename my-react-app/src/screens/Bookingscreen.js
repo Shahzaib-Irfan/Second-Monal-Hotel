@@ -18,13 +18,18 @@ function Bookingscreen() {
   const todate1 = moment(todate, 'DD-MM-YYYY');
   const totalDays = moment.duration(todate1.diff(fromdate1)).asDays();
   const [totalRent , setTotalRent ] = useState();
+  if(localStorage.getItem("currentUser")===null)
+  {
+    window.location.href = '/Login';
+  }
   const Name = localStorage.getItem("currentUser");
   const finalName = JSON.parse(Name);
+  
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
         setLoading(true);
-  
         const response = await axios.get(`http://localhost:5000/api/rooms/getroombyid/${roomid}`);
         const data = response.data;
         setTotalRent(data.rentperday * totalDays);

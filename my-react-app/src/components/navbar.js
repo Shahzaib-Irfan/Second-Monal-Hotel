@@ -11,7 +11,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'black' }}>
       <div className="container-fluid">
-        <a className="navbar-brand" href="#" style={{ color: 'white' }}>
+        <a className="navbar-brand" href="/home" style={{ color: 'white' }}>
           Second Monal
         </a>
         <button

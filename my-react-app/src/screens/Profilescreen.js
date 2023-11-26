@@ -3,6 +3,7 @@ import { Tabs } from 'antd';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
+import Swal from 'sweetalert2';
 const { TabPane } = Tabs;
 
 
@@ -47,7 +48,6 @@ export function MyBookings() {
             setLoading(true);
           const response = await axios.post('http://localhost:5000/api/bookings/getbookingsbyuserid', { userid: User.user._id });
           const bookings = response.data;
-          console.log(bookings);
           setbooking(bookings);
           setLoading(false);
           console.log(booking);
@@ -60,7 +60,21 @@ export function MyBookings() {
   
       fetchData();
     }, []);
-  
+    
+    async function CancelBooking(id , roomid)
+    {
+        try {
+            setLoading(true);
+            const result = (await axios.post('http://localhost:5000/api/bookings/cancelbooking', { id , roomid })).data;
+            console.log(result);
+            setLoading(false);
+            Swal.fire('Congratulations' , 'Your room booking has been cancelled' , 'success').then(result => {window.location.reload()});
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+            Swal.fire('Oops' , 'Your room booking can not be cancelled' , 'error');
+        }
+    }
     return (
         <div className='row'>
             <div className='col-md-6'>
@@ -74,9 +88,20 @@ export function MyBookings() {
                         <p><b>Check Out :</b> {bookin.todate}</p>
                         <p><b>Amount :</b> {bookin.totalAmount}</p>
                         <p><b>Status :</b> {bookin.status == 'booked' ? "Confirmed" : "Cancelled"}</p>
-                        <div className='text-right'>
-                            <button className='btn btn-primary' style={{ backgroundColor: 'black', color: 'white' , boxShadow: 'none'}} >Cancelled Booking</button>
-                        </div>
+                        {bookin.status !== 'cancelled' && (
+                            <div className='text-right'>
+                                <button
+                                    className='btn btn-primary'
+                                    style={{ backgroundColor: 'black', color: 'white', boxShadow: 'none' }}
+                                    onClick={() => {
+                                        console.log("Cancel button clicked");
+                                        CancelBooking(bookin._id, bookin.roomid);
+                                    }}
+                                >
+                                    Cancel Booking
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
