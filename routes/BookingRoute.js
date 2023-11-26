@@ -5,6 +5,7 @@ const room_array = require('../models/rooms');
 const stripe = require('stripe')('sk_test_51NQplaIguDrrT8uj975KQ7XbE1Uh8887Tl8TdhhrpHrCYMt0TgGwcohRVreIo7PQCZt35AIdy2US6nBQ7LYmcw0Z007bHu5rIa'); // Replace with your actual Stripe secret key
 const { v4: uuidv4 } = require('uuid');
 
+
 router.post('/bookroom', async (req, res) => {
     const {
         room,
@@ -114,5 +115,13 @@ router.post('/cancelbooking' , async(req,res) =>{
     }
 });
 
+router.get('/getallbookings' , async(req,res)=>{
+    try {
+        const bookings = await Booking.find();
+        res.send(bookings);
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+});
 
 module.exports = router;
