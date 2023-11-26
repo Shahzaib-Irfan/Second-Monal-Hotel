@@ -5,6 +5,8 @@ import Loader from '../components/Loader';
 import Error from '../components/Error';
 import moment from 'moment'
 import { DatePicker, Space } from 'antd';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 const { RangePicker } = DatePicker;
 
 function Homescreen() {

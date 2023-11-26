@@ -11,7 +11,7 @@ function Adminscreen() {
         {
             window.location.href = '/Login';
         }
-        if(!JSON.parse(localStorage.getItem('currentUser')).user.status)
+        if(JSON.parse(localStorage.getItem('currentUser')).user.status === false)
         {
             window.location.href = '/Login';
         }
