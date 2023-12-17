@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Room = require("../models/rooms");
 const roomsController = require("../controllers/roomsController");
-const { handleFileUpload } = require("../services/fileService");
 
 const upload = require("../utils/uploadMiddleware");
 
 router.post("/rooms", upload.single("image"), roomsController.createRoom);
+router.get("/rooms/getRooms", roomsController.getRooms);
 
 router.get("/getAllrooms", async (req, res) => {
   try {

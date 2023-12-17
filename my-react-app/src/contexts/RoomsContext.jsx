@@ -17,7 +17,7 @@ const RoomsContext = ({ children }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://smoggy-cheddar-banon.glitch.me/getRooms"
+        "http://localhost:5000/roomsApi/rooms/getRooms"
       );
       const data = await response.data;
       setRooms(data);

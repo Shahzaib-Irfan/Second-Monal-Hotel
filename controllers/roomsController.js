@@ -31,10 +31,10 @@ async function createRoom(req, res) {
   }
 }
 
-async function getDishes(req, res) {
+async function getRooms(req, res) {
   try {
-    const products = await Dish.find({}); // extracts each and every document from the collection
-    res.send(products); // sends back the resoponse to front-end
+    const allRooms = await rooms.find({}); // extracts each and every document from the collection
+    res.send(allRooms); // sends back the resoponse to front-end
   } catch (err) {
     console.log(err);
     res.send(500).json({ error: err.message });
@@ -53,11 +53,11 @@ async function getDishesByRID(req, res) {
 }
 
 // gets a dish by DishID
-async function getDish(req, res) {
+async function getRoom(req, res) {
   try {
     const id = req.params.id; // extracts the id sent by the frontend
-    const product = await Dish.findById(id);
-    res.send(product);
+    const room = await rooms.findById(id);
+    res.send(room);
   } catch (err) {
     console.log(err);
     res.send(500).json({ error: err.message });
@@ -95,4 +95,6 @@ async function deleteDish(req, res) {
 
 module.exports = {
   createRoom,
+  getRooms,
+  getRoom,
 };
