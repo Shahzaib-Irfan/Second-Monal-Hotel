@@ -6,6 +6,7 @@ const RoomsContextProvider = createContext();
 const RoomsContext = ({ children }) => {
   //const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
+  const [singleRoom, setSingleRoom] = useState({});
   const [featured, setFeatured] = useState([]);
   const [pendingBookings, setPendingBookings] = useState([]);
   const [approvedBookings, setApprovedBookings] = useState([]);
@@ -21,6 +22,23 @@ const RoomsContext = ({ children }) => {
       );
       const data = await response.data;
       setRooms(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching rooms:", error);
+    }
+  };
+
+  const fetchSingleRoom = async (id) => {
+    setLoading(true);
+    try {
+      console.log(id);
+      const response = await axios.get(
+        `http://localhost:5000/roomsApi/rooms/getSingleRoom/${id}`
+      );
+      const data = await response.data;
+      console.log(data);
+      setSingleRoom(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -120,12 +138,14 @@ const RoomsContext = ({ children }) => {
         mode,
         setMode,
         handleUpdateDelete,
+        fetchSingleRoom,
         pendingBookings,
         fetchPendingBookings,
         approvedBookings,
         fetchApprovedBookings,
         setApprovedBookings,
         fetchSingleApprovedRoom,
+        singleRoom,
         roomId,
         setRoomId,
         bookedRooms,

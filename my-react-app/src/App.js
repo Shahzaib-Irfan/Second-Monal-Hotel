@@ -10,6 +10,7 @@ import Profilescreen from "./screens/Profilescreen";
 import Adminscreen from "./screens/Adminscreen";
 import AdminRooms from "./components/AdminRooms";
 import AddRoom from "./components/AddRoom";
+import BookRoom from "./components/BookRoom";
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/home" exact Component={Homescreen} />
-          <Route path="/managerooms" element={<AdminRooms />} />
-          <Route path="/managerooms/addroom" element={<AddRoom />} />
+          <Route path="/viewrooms" element={<AdminRooms />} />
+          <Route path="/viewrooms/addroom" element={<AddRoom />} />
+          <Route path="/viewrooms/bookroom/:id" element={<BookRoom />} />
           <Route
             path="/book/:roomid/:fromdate/:todate"
             exact
