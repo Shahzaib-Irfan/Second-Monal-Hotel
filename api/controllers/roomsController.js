@@ -53,35 +53,6 @@ async function getRoom(req, res) {
   }
 }
 
-async function updateDish(req, res) {
-  try {
-    const file = req.file.filename;
-    const product = await Dish.updateOne(
-      { _id: req.params["id"] },
-      {
-        name: req.body["dishName"],
-        description: req.body["description"],
-        type: req.body["dishType"],
-        ingredients: req.body["ingredients"],
-        price: req.body["price"],
-        image: file,
-      }
-    );
-    res.status(201).json(product);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
-
-async function deleteDish(req, res) {
-  try {
-    const product = await Dish.deleteOne({ _id: req.params["id"] });
-    res.status(201).json(product);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
-
 module.exports = {
   createRoom,
   getRooms,
