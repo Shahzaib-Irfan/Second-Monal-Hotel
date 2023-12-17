@@ -16,7 +16,7 @@ const BookRoom = () => {
   const [children, setChildren] = useState(0);
   const [adults, setAdults] = useState(0);
 
-  const { id } = useParams();
+  const { id } = useParams();          // get room ID from URL
   const {
     setLoading,
     loading,
@@ -75,7 +75,7 @@ const BookRoom = () => {
     return { arrival, departure };
   }
 
-  function checkOverlap(booking1, booking2) {
+  function checkOverlap(booking1, booking2) {   // overlap logic check
     const isArrivalEqual =
       booking1.arrival.getTime() === booking2.arrival.getTime();
     const isDepartureEqual =
