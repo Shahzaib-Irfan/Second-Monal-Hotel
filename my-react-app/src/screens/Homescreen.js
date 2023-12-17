@@ -4,6 +4,7 @@ import Room from "../components/Room";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
+import { useRoomsContext } from "../contexts/RoomsContext";
 import DisplayRoom from "../components/DisplayRoom";
 import { DatePicker, Space } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,7 +12,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 const { RangePicker } = DatePicker;
 
 function Homescreen() {
-  const [rooms, setRooms] = useState([]); // Initialize rooms as an empty array
+  const { findBookingsbyDates, rooms, fetchRooms } = useRoomsContext();
+  const [roomsData, setRoomsData] = useState([]); // Initialize rooms as an empty array
   const [loading, setLoading] = useState(false); // Initialize with false
   const [error, setError] = useState(false); // Initialize with false
   const [fromdate, setfromDate] = useState();
@@ -27,7 +29,7 @@ function Homescreen() {
           await axios.get("http://localhost:5000/roomsApi/rooms/getRooms")
         ).data;
         const roomsArray = data;
-        setRooms(data);
+        setRoomsData(data);
         setduplicaterooms(data);
         setLoading(false); // Set loading to false after fetching data
       } catch (error) {
@@ -36,60 +38,61 @@ function Homescreen() {
         setLoading(false); // Set loading to false if there's an error
       }
     };
-    fetchData();
+    fetchRooms();
   }, []);
 
   function FilterByDate(dates, dateStrings) {
-    setfromDate(dates[0].format("DD-MM-YYYY"));
-    settoDate(dates[1].format("DD-MM-YYYY"));
-    var temprooms = [];
-    var availability = false;
-    for (const room of duplicaterooms) {
-      if (room.currentBookings && room.currentBookings.length > 0) {
-        availability = false;
-        for (const booking of room.currentBookings) {
-          const fromDateString = booking.fromdate;
-          const fromParts = fromDateString.split("-");
-          const fromDate = new Date(
-            fromParts[2],
-            fromParts[1] - 1,
-            fromParts[0]
-          );
+    findBookingsbyDates(dates);
+    // setfromDate(dates[0].format("DD-MM-YYYY"));
+    // settoDate(dates[1].format("DD-MM-YYYY"));
+    // var temprooms = [];
+    // var availability = false;
+    // for (const room of duplicaterooms) {
+    //   if (room.currentBookings && room.currentBookings.length > 0) {
+    //     availability = false;
+    //     for (const booking of room.currentBookings) {
+    //       const fromDateString = booking.fromdate;
+    //       const fromParts = fromDateString.split("-");
+    //       const fromDate = new Date(
+    //         fromParts[2],
+    //         fromParts[1] - 1,
+    //         fromParts[0]
+    //       );
 
-          // Similarly, do the same for toDate
-          const toDateString = booking.todate;
-          const toParts = toDateString.split("-");
-          const toDate = new Date(toParts[2], toParts[1] - 1, toParts[0]);
-          const date0 = new Date(dates[0].format("MM-DD-YYYY"));
-          const date1 = new Date(dates[1].format("MM-DD-YYYY"));
+    //       // Similarly, do the same for toDate
+    //       const toDateString = booking.todate;
+    //       const toParts = toDateString.split("-");
+    //       const toDate = new Date(toParts[2], toParts[1] - 1, toParts[0]);
+    //       const date0 = new Date(dates[0].format("MM-DD-YYYY"));
+    //       const date1 = new Date(dates[1].format("MM-DD-YYYY"));
 
-          if (
-            !(date0 >= fromDate && date0 <= toDate) &&
-            !(date1 >= fromDate && date1 <= toDate)
-          ) {
-            if (
-              moment(dates[0].format("DD-MM-YYYY"))._i !== booking.fromdate &&
-              moment(dates[0].format("DD-MM-YYYY"))._i !== booking.todate &&
-              moment(dates[1].format("DD-MM-YYYY"))._i !== booking.fromdate &&
-              moment(dates[1].format("DD-MM-YYYY"))._i !== booking.todate
-            ) {
-              availability = true;
-            }
-          }
-        }
-      }
-      if (availability) {
-        temprooms.push(room);
-      }
-      setRooms(temprooms);
-    }
+    //       if (
+    //         !(date0 >= fromDate && date0 <= toDate) &&
+    //         !(date1 >= fromDate && date1 <= toDate)
+    //       ) {
+    //         if (
+    //           moment(dates[0].format("DD-MM-YYYY"))._i !== booking.fromdate &&
+    //           moment(dates[0].format("DD-MM-YYYY"))._i !== booking.todate &&
+    //           moment(dates[1].format("DD-MM-YYYY"))._i !== booking.fromdate &&
+    //           moment(dates[1].format("DD-MM-YYYY"))._i !== booking.todate
+    //         ) {
+    //           availability = true;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   if (availability) {
+    //     temprooms.push(room);
+    //   }
+    //   setRooms(temprooms);
+    // }
   }
 
   function FilterBySearch() {
     const tempRooms = duplicaterooms.filter((room) =>
       room.name.toLowerCase().includes(SearchKey.toLowerCase())
     );
-    setRooms(tempRooms);
+    setRoomsData(tempRooms);
   }
 
   function FilterByType(e) {
@@ -98,9 +101,9 @@ function Homescreen() {
       const temprooms = duplicaterooms.filter(
         (room) => room.name.toLowerCase() == e.toLowerCase()
       );
-      setRooms(temprooms);
+      setRoomsData(temprooms);
     } else {
-      setRooms(duplicaterooms);
+      setRoomsData(duplicaterooms);
     }
   }
   return (

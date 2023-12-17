@@ -127,6 +127,22 @@ const RoomsContext = ({ children }) => {
       }
     }
   };
+
+  const findBookingsbyDates = async (dates) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/bookingApi/bookings/getBookingsbyDates/${dates}`
+      );
+      const data = await response.data;
+      console.log(data);
+      setRooms(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching rooms:", error);
+    }
+  };
   return (
     <RoomsContextProvider.Provider
       value={{
@@ -146,6 +162,7 @@ const RoomsContext = ({ children }) => {
         setApprovedBookings,
         fetchSingleApprovedRoom,
         singleRoom,
+        findBookingsbyDates,
         roomId,
         setRoomId,
         bookedRooms,
