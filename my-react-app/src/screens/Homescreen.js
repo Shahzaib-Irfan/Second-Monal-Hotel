@@ -4,6 +4,7 @@ import Room from "../components/Room";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
+import DisplayRoom from "../components/DisplayRoom";
 import { DatePicker, Space } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -148,12 +149,7 @@ function Homescreen() {
           rooms.map((room, index) => {
             return (
               <div key={index} className="col-md-9 mt-3">
-                <Room
-                  room={room}
-                  index={index}
-                  fromdate={fromdate}
-                  todate={todate}
-                />
+                <DisplayRoom {...room} />
               </div>
             );
           })
