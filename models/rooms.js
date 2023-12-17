@@ -1,37 +1,45 @@
 const mongoose = require("mongoose");
 
-const room_schema = mongoose.Schema({
-    name:{
-        type:String,
-        require:true
+const room_schema = mongoose.Schema(
+  {
+    roomNo: {
+      type: String,
+      required: true,
     },
-    maxCount:{
-        type:Number,
-        require:true
+    description: {
+      type: String,
+      required: true,
     },
-    phoneNumber:{
-        type:Number,
-        require:true
+    roomType: {
+      type: String,
+      required: true,
     },
-    rentperday:{
-        type:Number,
-        require:true
+    servantName: {
+      type: String,
+      required: true,
     },
-    imageUrls:[],
-    currentBookings:[],
-    type :{
-        type:String,
-        require:true
+    servantContact: {
+      type: String,
+      required: true,
     },
-    Room_description:{
-        type:String,
-        require:true
-    }
-} , {
-    timestamps:true,
-})
+    image: {
+      type: String,
+      required: true,
+    },
+    rate: {
+      type: Number,
+      required: true,
+    },
+    availabilityStatus: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-
-const roomModel = mongoose.model('rooms' , room_schema)
+const roomModel = mongoose.model("rooms", room_schema);
 
 module.exports = roomModel;

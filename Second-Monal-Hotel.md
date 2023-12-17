@@ -6,9 +6,8 @@ The aim of this case study is to make a web application for a **Second-Montal-Ho
 
 **Project Technology**
 
-1. Platform: Mobile
-2. Stack: Flutter
-
-**Developer Name**
+1. Platform: Web
+2. Stack: MERN
+   **Developer Name**
 
 Muhammad Hamza
