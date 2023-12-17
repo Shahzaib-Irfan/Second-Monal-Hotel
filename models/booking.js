@@ -1,47 +1,59 @@
 const mongoose = require("mongoose");
 
-const bookingSchema = mongoose.Schema({
-    room : {
-        type : String,
-        required : true
+const bookingSchema = mongoose.Schema(
+  {
+    roomId: {
+      type: String,
+      required: true,
     },
-    roomid : {
-        type : String,
-        required : true
+    name: {
+      type: String,
+      required: true,
     },
-    userid : {
-        type : String,
-        required : true
+    email: {
+      type: String,
+      required: true,
     },
-    fromdate : {
-        type : String,
-        required : true
+    contact: {
+      type: String,
+      required: true,
     },
-    todate : {
-        type : String,
-        required : true
+    arrivalDate: {
+      type: Date,
+      required: true,
     },
-    totalAmount : {
-        type : Number,
-        required : true
+    arrivalTime: {
+      type: String,
+      required: true,
     },
-    totalDays : {
-        type : Number,
-        required : true
+    departureDate: {
+      type: Date,
+      required: true,
     },
-    transactionId : {
-        type : String,
-        required : true
+    departureTime: {
+      type: String,
+      required: true,
     },
-    status : {
-        type : String,
-        required : true,
-        default : "booked"
-    }
-}, {
-    timestamps : true,
-});
+    children: {
+      type: Number,
+      required: true,
+    },
+    adults: {
+      type: Number,
+      required: true,
+    },
+    approvedStatus: {
+      type: Boolean,
+    },
+    isPaid: {
+      type: Boolean,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const BookingModel = mongoose.model('booking' , bookingSchema)
+const BookingModel = mongoose.model("booking", bookingSchema);
 
 module.exports = BookingModel;

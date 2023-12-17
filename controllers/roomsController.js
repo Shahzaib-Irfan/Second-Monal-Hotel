@@ -41,17 +41,6 @@ async function getRooms(req, res) {
   }
 }
 
-// gets dish by restaurantID
-async function getDishesByRID(req, res) {
-  try {
-    const products = await Dish.find({ restaurantID: req.params["id"] }); // gets a single dish
-    res.send(products);
-  } catch (err) {
-    console.log(err);
-    res.send(500).json({ error: err.message });
-  }
-}
-
 // gets a dish by DishID
 async function getRoom(req, res) {
   try {

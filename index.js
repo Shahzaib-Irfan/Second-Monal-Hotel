@@ -29,10 +29,14 @@ app.use(cors()); // Enable CORS for all routes
 
 app.use("/roomsApi", roomRoute);
 app.use("/api/users", userRoute);
-app.use("/api/bookings", bookRoute);
+app.use("/bookingApi", bookRoute);
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Server is running on my port ${port}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello");
 });

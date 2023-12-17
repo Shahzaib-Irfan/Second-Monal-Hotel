@@ -7,6 +7,7 @@ const upload = require("../utils/uploadMiddleware");
 
 router.post("/rooms", upload.single("image"), roomsController.createRoom);
 router.get("/rooms/getRooms", roomsController.getRooms);
+router.get("/rooms/getSingleRoom/:id", roomsController.getRoom);
 
 router.get("/getAllrooms", async (req, res) => {
   try {
