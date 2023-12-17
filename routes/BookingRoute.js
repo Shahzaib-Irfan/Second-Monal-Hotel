@@ -9,6 +9,10 @@ const { v4: uuidv4 } = require("uuid");
 const bookingController = require("../controllers/bookingController");
 
 router.post("/bookroom/:id", bookingController.createBooking);
+router.get(
+  "/bookings/getBookingsbyDates/:dates",
+  bookingController.getBookingsbyDates
+);
 
 // router.post('/bookroom', async (req, res) => {
 //     const {

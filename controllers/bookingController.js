@@ -1,4 +1,6 @@
 const booking = require("../models/booking");
+const rooms = require("../models/rooms");
+const moment = require("moment");
 
 async function createBooking(req, res) {
   try {
@@ -89,7 +91,48 @@ async function getBookings(req, res) {
   }
 }
 
+async function getBookingsbyDates(req, res) {
+  try {
+    const startDate = new Date(req.params.dates.slice(0, 29));
+    const formattedStartDate = startDate.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    const endDate = new Date(req.params.dates.slice(30, 59));
+    const formattedEndDate = endDate.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    var startDateNew = new Date(
+      moment(formattedStartDate, "DD/MM/YYYY").toISOString()
+    );
+    var endDateNew = new Date(
+      moment(formattedEndDate, "DD/MM/YYYY").toISOString()
+    );
+    const bookings = await booking.find({
+      departureDate: { $gte: startDateNew },
+      arrivalDate: { $lte: endDateNew },
+    });
+
+    console.log(bookings);
+
+    const bookingIds = bookings.map((doc) => doc.roomId);
+
+    // Use `exec` to convert the cursor to a promise resolving to an array
+    const roomData = await rooms.find({ _id: { $nin: bookingIds } }).exec();
+
+    res.json(roomData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+}
+
 module.exports = {
   createBooking,
   getBookings,
+  getBookingsbyDates,
 };

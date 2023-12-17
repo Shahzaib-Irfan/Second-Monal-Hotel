@@ -1,4 +1,5 @@
 const rooms = require("../models/rooms");
+const moment = require("moment");
 
 async function createRoom(req, res) {
   try {
@@ -24,7 +25,7 @@ async function createRoom(req, res) {
 
     const savedRoom = await rooms.create(room); //inserts object in database
 
-    res.status(201).redirect("http://localhost:3000/managerooms"); // redirects the front end to some page
+    res.status(201).redirect("http://localhost:3000/viewrooms"); // redirects the front end to some page
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -40,7 +41,6 @@ async function getRooms(req, res) {
     res.send(500).json({ error: err.message });
   }
 }
-
 // gets a dish by DishID
 async function getRoom(req, res) {
   try {
