@@ -18,6 +18,7 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Routes>
+          <Route path="/" exact Component={Loginscreen} />
           <Route path="/home" exact Component={Homescreen} />
           <Route path="/viewrooms" element={<AdminRooms />} />
           <Route path="/viewrooms/addroom" element={<AddRoom />} />
