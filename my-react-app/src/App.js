@@ -14,7 +14,7 @@ import BookRoom from "./components/BookRoom";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App"> 
       <Navbar />
       <BrowserRouter>
         <Routes>
