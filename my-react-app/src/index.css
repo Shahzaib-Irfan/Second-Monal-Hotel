@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif , 'Montserrat', sans-serif;
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,45 +10,4 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.smallimg {
-  height: 200px;
-  width: 100% !important;
-  border-radius: 5px !important;
-}
-
-.smallimgBook {
-  height: 420px;
-  width: 100% !important;
-  border-radius: 5px !important;
-}
-
-.bs {
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin-top: 20px;
-  border-radius: 5px;
-  padding: 20px;
-}
-
-input , select{
-  box-shadow: none !important;
-  margin-top: 10px;
-  border: 1px solid black !important;
-}
-
-.dropdown-toggle
-{
-  border: 0px solid black !important;
-}
-
-.select-wrapper {
-  position: relative;
-}
-
-.symbol {
-  position: absolute;
-  top: 50%;
-  right: 10px; /* Adjust the right distance as needed */
-  transform: translateY(-50%);
 }

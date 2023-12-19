@@ -1,31 +1,17 @@
-// const mongoose = require('mongoose');
-// mongoose.set('strictQuery',true);
+const { default: mongoose } = require("mongoose");
 
-// mongoose.connect('mongodb://127.0.0.1:27017/SecondMonal' , {
-//     useNewUrlParser:true,
-// });
+let mongoURL = 'mongodb+srv://2021cs12:spd3btg2@afraz1.axg4vae.mongodb.net/tiers-hotel-app'
 
-// const db = mongoose.connection;
-// db.on('error', (err) => {
-//     console.log('Failed tp connect with db');
-// });
-// db.once('open', () => {
-//     console.log('Connected with db');
-// });
+mongoose.connect(mongoURL, {useUnifiedTopology : true, useNewUrlParser: true})
 
-const mongoose = require("mongoose");
+var con = mongoose.connection
 
-mongoose.set("strictQuery", false);
-mongoose.connect(
-  "mongodb+srv://shahzaibirfan1012:jW99nWH0cstu1e1B@termproject.d0usvgi.mongodb.net/",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+con.on('error', () => {
+    console.log(`Error connecting to database`)
+})
 
-var db = mongoose.connection;
-db.on("error", () => console.log("error"));
-db.once("open", () => console.log("Database Connected"));
+con.on('connected', () => {
+    console.log(`Connected to the Database`)
+})
 
-module.exports = { db };
+module.exports = mongoose

@@ -1,217 +1,146 @@
-import { React, useState } from "react";
-import Image1 from "../assets/pexels-erica-zhao-2670273.jpg";
-import Image2 from "../assets/smallImage.jpg";
-
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 const AddRoom = () => {
-  const [price, setPrice] = useState(0);
-  return (
-    <>
-      <AddRoomContainer>
-        <article className="img-container">
-          <img src={Image1} alt="" className="main-img" />
-          <img src={Image2} alt="" className="accent-img" />
-        </article>
-        <article className="form-article">
-          <form
-            action="http://localhost:5000/roomsApi/rooms"
-            method="post"
-            encType="multipart/form-data"
-          >
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                name="roomNo"
-                class="form-control"
-                id="floatingInput"
-                placeholder="Room 1"
-              />
-              <label for="floatingInput">Room No.</label>
-            </div>
-            <div class="form-floating">
-              <textarea
-                class="form-control"
-                name="description"
-                id="floatingArea"
-                placeholder="Description"
-                rows={20}
-              />
-              <label for="floatingArea">Description</label>
-            </div>
-            <select
-              class="form-select form-select-sm"
-              aria-label=".form-select-sm example"
-              name="roomType"
-            >
-              <option selected>Room Type</option>
-              <option value="Single Bed">Single Bed</option>
-              <option value="Double Bed">Double Bed</option>
-            </select>
-            <div class="form-floating mb-3" style={{ marginTop: "5px" }}>
-              <input
-                type="text"
-                name="servantName"
-                class="form-control"
-                id="InputServantName"
-                placeholder="Servant Name"
-              />
-              <label for="InputServantName">Servant Name</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                name="servantContact"
-                class="form-control"
-                id="InputServantContact"
-                placeholder="Servant Contact"
-              />
-              <label for="InputServantName">Servant Contact</label>
-            </div>
-            <div style={{ marginTop: "10px" }}>
-              <input
-                type="file"
-                id="imageUpload"
-                name="image"
-                multiple
-                accept="image/*"
-              />
-            </div>
-            <div style={{ margin: "10px 0px 0px 10px" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <label htmlFor="rate">Price</label>
-                <input
-                  style={{ margin: "0px 0px 0px 10px" }}
-                  type="range"
-                  id="rate"
-                  name="rate"
-                  min={0}
-                  max={10000}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-                <p style={{ color: "green" }}>{price}</p>
-              </div>
-              <select
-                class="form-select form-select-sm"
-                aria-label=".form-select-sm example"
-                name="availabilityStatus"
-                style={{ marginBottom: "5px" }}
-              >
-                <option selected>Availability Status</option>
-                <option value="True">Available</option>
-                <option value="False">Unavailable</option>
-              </select>
-            </div>
-            <button className="cool-button" type="submit">
-              Add Room
-            </button>
-          </form>
-        </article>
-      </AddRoomContainer>
-    </>
-  );
+  const [formData, setFormData] = useState({
+    name: '',
+    rentPerDay: '',
+    phoneNumber: '',
+    maxCount: '',
+    type: 'delux',
+    description: '',
+    images: [],
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const images = Array.from(e.target.files);
+    setFormData((prevData) => ({
+      ...prevData,
+      images,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      /* const formDataToSend = new FormData();
+      for (const key in formData) {
+        if (key === 'images') {
+          formData[key].forEach((image) => {
+            formDataToSend.append(key, image);
+          });
+        } else {
+          formDataToSend.append(key, formData[key]);
+        }
+      } */
+
+      /* console.log(formData)
+
+      const response = await fetch('/addRooms', {
+        method: 'POST',
+        body: formData,
+      }); */
+
+     /*  if (response.ok) {
+        alert('Saved successfully');
+      } else {
+        alert('Something Went Wrong, Try again');
+      }
+    } catch (error) {
+      console.error('Error sending data:', error);*/
+    }finally{
+      
+    }
 };
 
-const AddRoomContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-
-  .img-container {
-    width: 50%;
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .main-img {
-    width: 100%;
-    height: 550px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  .accent-img {
-    position: absolute;
-    bottom: 0;
-    right: -25px;
-    width: 250px;
-    border-radius: 10px;
-  }
-
-  .form-article {
-    flex: 1;
-    padding: 3rem;
-    max-width: 500px;
-  }
-
-  .form-floating {
-    margin-bottom: 1.5rem;
-  }
-
-  .form-control {
-    width: 100%;
-    padding: 1rem;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  label {
-    font-size: 16px;
-  }
-
-  /* Base styles for the cool submit button */
-  .cool-button {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #4caf50; /* Green background color */
-    color: #fff; /* Text color */
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Gradient background effect */
-  .cool-button {
-    background-image: linear-gradient(to right, #4caf50, #63a69f);
-  }
-
-  /* Hover effect */
-  .cool-button:hover {
-    background-image: linear-gradient(to right, #63a69f, #4caf50);
-  }
-
-  /* Optional: Add a box-shadow on hover for an additional effect */
-  .cool-button:hover {
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-  }
-
-  @media (max-width: 992px) {
-    flex-direction: column;
-
-    .img-container {
-      width: 100%;
-      max-height: 400px;
-    }
-
-    .main-img {
-      height: 100%;
-    }
-
-    .accent-img {
-      display: none;
-    }
-
-    .form-article {
-      padding: 2rem;
-    }
-  }
-`;
+  return (
+    <Form action='http://localhost:4000/addRooms' method='post' encType="multipart/form-data">
+      <Form.Group controlId="name">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="rentPerDay">
+        <Form.Label>Rent Per Day</Form.Label>
+        <Form.Control
+          type="number"
+          name="rentPerDay"
+          value={formData.rentPerDay}
+          onChange={handleInputChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="phoneNumber">
+        <Form.Label>Phone Number</Form.Label>
+        <Form.Control
+          type="tel"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={handleInputChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="maxCount">
+        <Form.Label>Max Count</Form.Label>
+        <Form.Control
+          type="number"
+          name="maxCount"
+          value={formData.maxCount}
+          onChange={handleInputChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="type">
+        <Form.Label>Type</Form.Label>
+        <Form.Control
+          as="select"
+          name="type"
+          value={formData.type}
+          onChange={handleInputChange}
+        >
+          <option value="delux">Delux</option>
+          <option value="non-delux">Non-Delux</option>
+        </Form.Control>
+      </Form.Group>
+      <Form.Group controlId="description">
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group controlId="images">
+        <Form.Label>Images</Form.Label>
+        <Form.Control
+          type="file"
+          name="images"
+          multiple
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
+  );
+};
 
 export default AddRoom;

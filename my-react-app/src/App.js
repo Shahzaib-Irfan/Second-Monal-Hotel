@@ -1,41 +1,39 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Navbar from "./components/navbar";
-import { Route, BrowserRouter, Routes, Link } from "react-router-dom";
-import Homescreen from "./screens/Homescreen";
-import Bookingscreen from "./screens/Bookingscreen";
-import Loginscreen from "./screens/Loginscreen";
-import Registerscreen from "./screens/Registerscreen";
-import Profilescreen from "./screens/Profilescreen";
-import Adminscreen from "./screens/Adminscreen";
-import AdminRooms from "./components/AdminRooms";
-import AddRoom from "./components/AddRoom";
-import BookRoom from "./components/BookRoom";
+import './App.css'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import Booking from './pages/Booking'
+import LogIn from './pages/Login'
+import Register from './pages/Register'
+import { useEffect } from 'react'
+import ProfilePage from './pages/ProfilePage'
+import AdminHomeScreen from './pages/AdminHomeScreen'
+import LandingPage from './pages/LandingPage'
 
 function App() {
+  useEffect(() =>{
+    localStorage.removeItem('currentUserForHotelApp')
+  },[])
   return (
-    <div className="App"> 
-      <Navbar />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" exact Component={Loginscreen} />
-          <Route path="/home" exact Component={Homescreen} />
-          <Route path="/viewrooms" element={<AdminRooms />} />
-          <Route path="/viewrooms/addroom" element={<AddRoom />} />
-          <Route path="/viewrooms/bookroom/:id" element={<BookRoom />} />
-          <Route
-            path="/book/:roomid/:fromdate/:todate"
-            exact
-            Component={Bookingscreen}
-          />
-          <Route path="/Login" exact Component={Loginscreen} />
-          <Route path="/Register" exact Component={Registerscreen} />
-          <Route path="/profile" exact Component={Profilescreen} />
-          <Route path="/Admin" exact Component={Adminscreen} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <>
+    <Router>
+    {/* the content hides behind navbar so the bottom style is applied */}
+      <div style={{ marginTop: '6rem' }}>
+          <Routes>
+              <Route exact path='/' element={<LandingPage />} />
+              <Route exact path='/home' element={<HomePage />} />
+              <Route exact path='/adminHome' element={<AdminHomeScreen />} />
+              <Route exact path='/book/:roomid/:fromDate/:toDate' element={<Booking />} />
+              <Route exact path='/loginScreen' element={<LogIn />} />
+              <Route exact path='/registerScreen' element={<Register />} />
+              <Route exact path='/profileScreen' element={<ProfilePage />}/>
+          </Routes>
+      </div>
+      </Router>
+    </>
+      
+    // <div className="App">
+    // </div>
   );
 }
 
-export default App;
+export default App

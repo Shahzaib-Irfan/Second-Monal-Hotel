@@ -1,38 +1,174 @@
-.App {
-  text-align: left;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:ital,wght@1,100&display=swap');
+/*body styling*/
+body{
+  font-family: 'Poppins',system-ui,-apple-system,Arial, Helvetica, sans-serif !important;
+}
+h1{
+  font-size: 20px;
+  margin-bottom:20px
+}
+h4{
+  font-size:17px;
+  margin-bottom:20px
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/*navbar css*/
+.navbar-dark{
+  background-color: #8a1471 !important;
+  color:#fff;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.nav-link{
+  color:#fff !important;
+  font-weight: 200;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar-nav{
+  margin-right: auto;    /*Move nav links to the left*/
+}
+/*hotel room image css*/
+.small-img{
+  max-height: 90%;
+  max-width: 100% !important;
+  margin-right: auto !important;
+  border-radius:5px !important;
+}
+.image-div{
+  align-items: right;
+  justify-content: right;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.room-info{
+  text-align: left;
+  justify-content: left
 }
 
-.App-link {
-  color: #61dafb;
+.btn{
+  box-shadow: none !important;
+}
+.bs{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /*margin-top:20px !important;*/
+  margin: 1.7rem !important;
+  border-radius: 10px !important;
+  padding:15px !important;
+}
+.ml-auto{
+  margin-right : auto !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*View Details Button Transition*/
+wrapper{
+  position: fixed;
+  width:50% !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.link_wrapper{
+  position: relative;
+}
+
+.button-wrapper{
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  background: #843ac1;;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 3px solid #843ac1;;
+  transition: all .35s;
+}
+
+.icon{
+  width: 50px;
+  height: 50px;
+  border: 3px solid transparent;
+  position: absolute;
+  transform: rotate(45deg);
+  right: 0;
+  top: 0;
+  z-index: -1;
+  transition: all .35s;
+}
+
+.icon svg{
+  width: 30px;
+  position: absolute;
+  top: calc(50% - 15px);
+  left: calc(50% - 15px);
+  transform: rotate(-45deg);
+  fill: #843ac1;
+  transition: all .35s;
+}
+
+a:hover{
+  width: 200px;
+  border: 3px solid #843ac1;;
+  background: transparent;
+  color: #843ac1;;
+}
+
+a:hover + .icon{
+  border: 3px solid #843ac1;;
+  right: -25%;
+}
+.big-img{
+  height: 400px !important;
+}
+/*Booking Screen css*/
+.booking-img{
+  width:auto !important;
+}
+.amount-detail-booking{
+  margin-right: auto !important;
+}
+.img-container {
+  height: 100%; /* Set the desired height */
+  overflow: auto; /* Enable scrolling if needed */
+}
+.booking-row{
+  margin-top:20px !important;
+}
+
+/*Loading screen CSS*/
+.sweet-loading{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/*Register screen css*/
+.MuiTypography-root{
+  font-family:'Poppins', sans-serif!important ;
+}
+.MuiButtonBase-root{
+  font-family:'Poppins', sans-serif!important ;
+}
+
+
+/*Component Styling*/
+.rooms-filter,select, .ant-picker{
+  box-shadow: none !important;
+  margin-top:10px !important;
+  border : 2px solid black !important;
+  height :35px !important;
+  border-radius:10px !important;
+}
+.ant-picker-input input{
+  border:none !important;
+}
+
+/*Profile Page Styling*/
+.tabs-profile{
+  margin-top: 2vh !important;
+ /*  margin-left: 4rem !important;
+  margin-right: 4rem !important */;
+}
+p{
+  font-size: 19px !important;
 }
